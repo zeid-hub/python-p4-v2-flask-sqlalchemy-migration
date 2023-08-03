@@ -1,4 +1,4 @@
-# Database Migration
+# Database Migration : Code-Along
 
 ## Learning Goals
 
