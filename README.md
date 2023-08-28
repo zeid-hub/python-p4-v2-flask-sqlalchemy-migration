@@ -44,6 +44,8 @@ cannot carry out on its own:
 In this lesson, we will explore various types of schema migrations and how to
 roll back, or downgrade, migrations that were unnecessary or went awry.
 
+To check out the full list of supported commands, make sure you follow the setup instructions and then type `flask db --help` in the terminal.
+
 ---
 
 ## Setup
@@ -635,6 +637,7 @@ original `address`.
 
 You should now have a basic idea of how to make a variety of changes to database
 schemas using Flask-SQLAlchemy, Flask-Migrate and Alembic.
+If you'd like to know more about what alembic can autogenerate and what it cannot, check out their documentation [here](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect)
 
 ---
 
