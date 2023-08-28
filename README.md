@@ -44,7 +44,8 @@ cannot carry out on its own:
 In this lesson, we will explore various types of schema migrations and how to
 roll back, or downgrade, migrations that were unnecessary or went awry.
 
-To check out the full list of supported commands, make sure you follow the setup instructions and then type `flask db --help` in the terminal.
+To check out the full list of supported commands, make sure you follow the setup
+instructions and then type `flask db --help` in the terminal.
 
 ---
 
@@ -631,13 +632,15 @@ You may need to hit the refresh button to see that change:
 ![rename department table](https://curriculum-content.s3.amazonaws.com/7159/python-p4-v2-flask-sqlalchemy/rename_departments.png)
 
 Note: You should also update `models.py` to rename the variable back to the
-original `address`.
+original `address` (and revert `__repr__`).
 
 ## Conclusion
 
 You should now have a basic idea of how to make a variety of changes to database
-schemas using Flask-SQLAlchemy, Flask-Migrate and Alembic.
-If you'd like to know more about what alembic can autogenerate and what it cannot, check out their documentation [here](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect)
+schemas using Flask-SQLAlchemy, Flask-Migrate and Alembic. If you'd like to know
+more about what alembic can autogenerate and what it cannot, check out their
+documentation
+[here](https://alembic.sqlalchemy.org/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect)
 
 ---
 
@@ -649,3 +652,41 @@ If you'd like to know more about what alembic can autogenerate and what it canno
 - [Operation Reference - Alembic][op]
 
 [op]: https://alembic.sqlalchemy.org/en/latest/ops.html
+
+## Solution Code
+
+The final version of `models.py`:
+
+```py
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import MetaData
+
+# contains definitions of tables and associated schema constructs
+metadata = MetaData()
+
+# create the Flask SQLAlchemy extension
+db = SQLAlchemy(metadata=metadata)
+
+# define a model class by inheriting from db.Model.
+
+
+class Employee(db.Model):
+    __tablename__ = 'employees'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    salary = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<Employee {self.id}, {self.name}, {self.salary}>'
+
+class Department(db.Model):
+    __tablename__ = 'departments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    address = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Department {self.id}, {self.name}, {self.address}>'
+```
